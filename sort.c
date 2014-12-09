@@ -1,6 +1,14 @@
 /**
+ * Sorting Big Data
  *
+ * Authors:
+ *   Daniel Andrus, Erik Hattervig
  *
+ * Description
+ * This program will take lare amount of data spread across multiple
+ * files and attempt to sort them in ascending order using multiple
+ * processes. The program uses MPI to parallelize the work and to
+ * handle communication.
  *
  * Compilation:
  *   mpicc -g -Wall -std=c99 -lm -o sort sort.c

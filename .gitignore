@@ -30,3 +30,8 @@
 
 # Gedit temporary files
 *~
+
+# Compiled files
+*.o
+sort
+

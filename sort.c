@@ -48,6 +48,25 @@ int main(int argc, char** argv)
   MPI_Comm_rank(MPI_COMM_WORLD, &proc_rank);
   MPI_Get_processor_name(proc_name, &proc_name_length);
   
+  // Verify arguments
+  if (argc < 2)
+  {
+    if (proc_rank == 0)
+      printf("Usage:\n  %s <file1> [file2] [file3]...\n", argv[0]);
+    return 0;
+  }
+  
+  // Verify file access
+  for (i = 1; i < argc; ++i)
+  {
+    if (access(argv[i], F_OK) == -1)
+    {
+      if (proc_rank == 0)
+        printf("Error: unable to open file %s.", argv[i]);
+      return 0;
+    }
+  }
+  
   // Allocate pool and buckets
   pool = malloc(sizeof(item) * MAX_POOL);
   buckets = malloc(sizeof(item*) * NUM_BUCKETS);

@@ -19,6 +19,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <mpi.h>
 
 typedef long long ll;
@@ -39,8 +40,11 @@ int main(int argc, char** argv)
   item* pool;         // Pool of items to be sorted
   item** buckets;     // Buckets
   int* bucket_sizes;  // Sizes of various buckets
-  
-  int i, j, k;
+
+  // Temp variables
+  int i;
+  int j;
+  int k;
 
   // Initialize MPI stuff
   MPI_Init(&argc, &argv);
@@ -59,10 +63,10 @@ int main(int argc, char** argv)
   // Verify file access
   for (i = 1; i < argc; ++i)
   {
-    if (access(argv[i], F_OK) == -1)
+    if (access(argv[i], R_OK | W_OK) == -1)
     {
       if (proc_rank == 0)
-        printf("Error: unable to open file %s.", argv[i]);
+        printf("Error: unable to open file %s for reading/writing\n", argv[i]);
       return 0;
     }
   }

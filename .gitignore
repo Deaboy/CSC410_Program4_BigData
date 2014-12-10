@@ -34,4 +34,6 @@
 # Compiled files
 *.o
 sort
+read
+generate
 

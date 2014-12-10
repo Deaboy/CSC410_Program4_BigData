@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef long long item;
 
@@ -6,28 +7,29 @@ typedef long long item;
 
 int main(int argc, char** argv)
 {
-  FILE *fp;
-  
   if (argc < 2)
   {
-    printf("Usage:\n  %s <input file>", argv[0]);
+    printf("Usage:\n  %s <input file>\n", argv[0]);
     return 0;
   }
+  
+  FILE *fp;
   
   fp = fopen(argv[1], "r");
   
   int num;
-  item buffer[BUFFER_SIZE];
+  item* buffer = malloc(sizeof(item) * BUFFER_SIZE);
   
-  while(num = fread(buffer, sizeof(item), BUFFER_SIZE, fp))
+  while((num = fread(buffer, sizeof(item), BUFFER_SIZE, fp)) && num > 0)
   {
     int i;
     for (i = 0; i < num; ++i)
-      printf(" %*d", 19, buffer[i]);
-      if (i % 4 == 3)
+      printf(" %*lld", 39, buffer[i]);
+      if (i % 2 == 0)
         printf("\n");
   }
   
+  free(buffer);
   fclose(fp);
   return 0;
 }

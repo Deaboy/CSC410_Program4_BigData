@@ -4,26 +4,26 @@
 
 typedef long long item;
 
-#define BUFER_SIZE  1048576
+#define BUFFER_SIZE  1048576
 
 int main(int argc, char** argv)
 {
-  FILE *fp;
-  
   if (argc < 3)
   {
-    printf("Usage:\n  %s <output file> <num items>", argv[0]);
+    printf("Usage:\n  %s <output file> <num items>\n", argv[0]);
     return 0;
   }
   
+  FILE *fp;
+  
   int num = atoi(argv[2]);
   fp = fopen(argv[1], "w");
-  item buffer[BUFFER_SIZE];
+  item* buffer = malloc(sizeof(item) * BUFFER_SIZE);
   
   srand((unsigned) time(NULL));
-  item m1, m2;
+  item m1;
   
-  m1 = (~0) >>> 1; // lower 31 bits
+  m1 = ((unsigned) ~0) >> 1; // lower 31 bits
   
   while (num > 0)
   {
@@ -33,10 +33,11 @@ int main(int argc, char** argv)
       // Generate 64 bit random number
       buffer[i] = ((rand() & m1) << 33) | ((rand() & m1) << 2) | (rand() % 3);
     }
-    fwrite(buffer, sizeof(item), BUFFER_SIZE, fp);
+    fwrite(buffer, sizeof(item), i, fp);
     num -= i;
   }
-  
+ 
+  free(buffer); 
   fclose(fp);
   return 0;
 }

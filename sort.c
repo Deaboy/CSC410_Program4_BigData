@@ -173,7 +173,7 @@ void quicksort(item* array, int begin, int end)
     return;
 
   // Choose pivot
-  p = (end - begin) / 2;
+  p = begin + ((end - begin) / 2);
   if ((array[p] < array[begin] && array[begin] < array[end-1])
       || (array[end-1] < array[begin] && array[begin] < array[p]))
     p = begin;
@@ -201,7 +201,7 @@ void quicksort(item* array, int begin, int end)
   swap(array[begin], array[i-1]);
   
   // Make recursive calls!
-  quicksort(array, begin, i);
+  quicksort(array, begin, i-1);
   quicksort(array, i, end);
   
   // Everything is sorted at this point.

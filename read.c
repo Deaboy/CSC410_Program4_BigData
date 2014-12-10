@@ -2,7 +2,7 @@
 
 typedef long long item;
 
-#define BUFER_SIZE  1048576
+#define BUFFER_SIZE  1048576
 
 int main(int argc, char** argv)
 {
@@ -19,7 +19,7 @@ int main(int argc, char** argv)
   int num;
   item buffer[BUFFER_SIZE];
   
-  while(num = read(buffer, sizeof(item), BUFFER_SIZE, fp))
+  while(num = fread(buffer, sizeof(item), BUFFER_SIZE, fp))
   {
     int i;
     for (i = 0; i < num; ++i)

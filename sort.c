@@ -21,6 +21,14 @@
 #include <stdlib.h>
 #include <mpi.h>
 
+typedef long long ll;
+typedef long double ld;
+typedef long long item;
+
+#define MAX_POOL    (536870912 / sizeof(item))   // 512 MB
+#define MAX_BUCKET  (67108864 / sizeof(item))    // 64MB
+#define NUM_BUCKETS 8
+
 int main(int argc, char** argv)
 {
   // Variables
@@ -28,15 +36,38 @@ int main(int argc, char** argv)
   int proc_rank;
   int proc_name_length;
   char proc_name[MPI_MAX_PROCESSOR_NAME];
+  item* pool;         // Pool of items to be sorted
+  item** buckets;     // Buckets
+  int* bucket_sizes;  // Sizes of various buckets
   
+  int i, j, k;
+
   // Initialize MPI stuff
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &proc_count);
   MPI_Comm_rank(MPI_COMM_WORLD, &proc_rank);
   MPI_Get_processor_name(proc_name, &proc_name_length);
+  
+  // Allocate pool and buckets
+  pool = malloc(sizeof(item) * MAX_POOL);
+  buckets = malloc(sizeof(item*) * NUM_BUCKETS);
+  bucket_sizes = malloc(sizeof(int) * NUM_BUCKETS);
+  for (i = 0; i < NUM_BUCKETS; i++)
+    buckets[i] = malloc(sizeof(item) * MAX_BUCKET);
+  
+  // Determine which files to open
+  // Somehow find min/max
+  // Begin bucket sort
+  // when a bucket is full, send it to another process
+  // when pool is empty, open next file and load up items
+  // When all items have been sorted, start merging results
 
-  printf("Hello from process %d of %d on %s!\n",
-         proc_rank+1, proc_count, proc_name);
+  // Free up resources
+  free(pool);
+  free(bucket_sizes);
+  for (i = 0; i < NUM_BUCKETS; i++)
+    free(buckets[i]);
+  free(buckets);
 
   MPI_Finalize();
 

@@ -189,10 +189,10 @@ void quicksort(item* array, int begin, int end)
   j = end-1;
   
   // Swap items that are out of order
-  while (i < j)
+  while (i <= j)
   {
-    while(array[i] <= array[begin] && i < j) ++i;
-    while(array[j] > array[begin] && i < j) --j;
+    while(array[i] <= array[begin] && i <= j) ++i;
+    while(array[j] > array[begin] && i <= j) --j;
     if (i < j && array[i] > array[begin] && array[j] <= array[begin])
       swap(array[i], array[j]);
   }

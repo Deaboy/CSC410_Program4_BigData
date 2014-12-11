@@ -49,6 +49,7 @@ int main(int argc, char** argv)
   int tag;
   char* filename;
   FILE* fp;
+  double tstart, tend;
 
   // Temp variables
   int i;
@@ -148,6 +149,7 @@ int main(int argc, char** argv)
     printf("2. allocated space\n");
 #endif
     
+    tstart = MPI_Wtime();
     // sort file contents into buckets
     for (i = 1; i < argc-1; ++i)
     {
@@ -242,8 +244,12 @@ int main(int argc, char** argv)
     // Listen for "all done!" message from processes
     for (i = 1; i < proc_count; ++i)
       MPI_Recv(&tag, 1, MPI_INT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    tend = MPI_Wtime();
+
     printf("Sorting complete! Sorted data will be spread across files with the"
           " prefix %s\n", argv[argc-1]);
+    printf("Time taken: %lf seconds.\n", (tend-tstart));
   }
   else
   {

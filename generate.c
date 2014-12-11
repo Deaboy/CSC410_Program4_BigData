@@ -31,8 +31,8 @@ int main(int argc, char** argv)
     for (i = 0; i < num && i < BUFFER_SIZE; ++i)
     {
       // Generate 64 bit random number
-      buffer[i] = ((rand() & m1) << 33) | ((rand() & m1) << 2) | (rand() % 3);
-      buffer[i] %= 1000;
+      buffer[i] = 0 | ((rand() & m1) << 32) | ((rand() & m1) << 1) | (rand() & 1);
+      //buffer[i] %= 1000;
     }
     fwrite(buffer, sizeof(item), i, fp);
     num -= i;

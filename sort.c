@@ -28,10 +28,8 @@ typedef long long ll;
 typedef long double ld;
 typedef long long item;
 
-//#define MAX_BUFFER  (536870912 / sizeof(item))   // 512 MB
-#define MAX_BUFFER 16
-//#define MAX_BUCKET  (67108864 / sizeof(item))    // 64 MB
-#define MAX_BUCKET 10
+#define MAX_BUFFER  (536870912 / sizeof(item))   // 512 MB
+#define MAX_BUCKET  (67108864 / sizeof(item))    // 64 MB
 #define NUM_BUCKETS 8
 // #define DEBUG
 

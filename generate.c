@@ -32,6 +32,7 @@ int main(int argc, char** argv)
     {
       // Generate 64 bit random number
       buffer[i] = ((rand() & m1) << 33) | ((rand() & m1) << 2) | (rand() % 3);
+      buffer[i] %= 1000;
     }
     fwrite(buffer, sizeof(item), i, fp);
     num -= i;
